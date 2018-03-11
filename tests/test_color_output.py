@@ -26,7 +26,9 @@ class ColorOutputTestCase(TestCase):
 
 
 class ConstructorUnitTests(ColorOutputTestCase):
-    """"""
+
+    def test_call(self):
+        self.mock_color_factory.assert_called_once_with()
 
 
 class ColorFactoryUnitTests(ColorOutputTestCase):
