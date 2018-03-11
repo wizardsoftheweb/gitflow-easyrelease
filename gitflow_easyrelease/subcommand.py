@@ -49,19 +49,23 @@ class Subcommand(object):
         """Executes its action"""
         version = (
             SemVer.process_version(parsed_args.version)
-            if self.has_version
+            if self.has_version and hasattr(parsed_args, 'version')
             else SemVer()
         )
         if version is None:
-            raise Exception(
+            raise ValueError(
                 'Version was not passed in and the repo is not on a release branch'
             )
         base = (
             parsed_args.base
-            if self.has_base
+            if self.has_base and hasattr(parsed_args, 'base')
             else None
         )
-        options = parsed_args.options
+        options = (
+            parsed_args.options
+            if hasattr(parsed_args, 'options')
+            else None
+        )
         for command in self.release_commands:
             Subcommand.execute_release_command(command, version, base, options)
 
