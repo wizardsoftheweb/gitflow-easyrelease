@@ -8,6 +8,7 @@ from gitflow_easyrelease import Application, ColorOutput, Subcommand
 
 
 def cli(args=None):
+    """Runs module from the CLI"""
     color_output = ColorOutput()
     subcommands = OrderedDict()
     subcommands['init'] = Subcommand(
