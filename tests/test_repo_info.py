@@ -4,7 +4,7 @@ from __future__ import print_function
 
 from unittest import TestCase
 
-from mock import call, MagicMock, patch
+from mock import call, patch
 
 from gitflow_easyrelease import RepoInfo
 
@@ -168,4 +168,21 @@ class GetTagsUnitTests(RepoInfoTestCase):
 
 
 class GetSemverTagsUnitTests(RepoInfoTestCase):
-    """"""
+    TAGS = range(0, 10)
+    SEMVER_TAGS = range(0, 10, 2)
+    CALLS = [call(tag) for tag in TAGS]
+
+    @patch('gitflow_easyrelease.repo_info.RepoInfo.get_tags', return_value=TAGS)
+    @patch(
+        'gitflow_easyrelease.repo_info.is_semver',
+        side_effect=lambda x: 0 == x % 2
+    )
+    def test_call(self, mock_semver, mock_tags):
+        mock_tags.assert_not_called()
+        mock_semver.assert_not_called()
+        self.assertEqual(
+            RepoInfo.get_semver_tags(),
+            self.SEMVER_TAGS
+        )
+        mock_tags.assert_called_once_with()
+        mock_semver.assert_has_calls(self.CALLS)
