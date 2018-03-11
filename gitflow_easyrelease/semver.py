@@ -92,10 +92,7 @@ class SemVer(object):
     def get_active_branch():
         """Determines the active branch"""
         repo_info = RepoInfo()
-        current = repo_info.get_active_branch()
-        if repo_info.is_release_branch():
-            return SemVer(*current.replace('release/', '').split('.'))
-        return None
+        return repo_info.to_semver()
 
     @staticmethod
     def get_current_version():
