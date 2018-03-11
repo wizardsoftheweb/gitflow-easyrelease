@@ -26,6 +26,7 @@ class Application(object):
         )
 
     def attach_subparsers(self, parser):
+        """Attaches subparsers for each subcommand"""
         subparsers = parser.add_subparsers(
             dest='subcommand',
             help='Available subcommands'
@@ -34,6 +35,7 @@ class Application(object):
             subcommand.attach_subparser(subparsers)
 
     def populate_root_parser(self, parser):
+        """Adds a help argument and subcommand info"""
         parser.add_argument(
             '-h', '--help',
             action='help',
@@ -42,6 +44,7 @@ class Application(object):
         self.attach_subparsers(parser)
 
     def bootstrap(self, args=None):
+        """Runs the application"""
         parser = self.create_root_parser()
         parsed_args = Application.parse_args(
             parser,
@@ -68,10 +71,12 @@ class Application(object):
 
     @staticmethod
     def ensure_git_flow():
+        """Ensures git flow is available"""
         check_output(['which', 'git-flow'])
 
     @staticmethod
     def create_root_parser():
+        """Creates the base parser"""
         parser = ArgumentParser(
             description='A tool to simplify git-flow-release',
             formatter_class=ColorHelpFormatter,
@@ -87,17 +92,20 @@ class Application(object):
 
     @staticmethod
     def parse_args(parser=None, args=None):
+        """Parses the passed-in args"""
         if not args:
             args = ['-h']
         return parser.parse_known_args(args)
 
     @staticmethod
     def all_help_prog_header(parser):
+        """Creates a pretty program header"""
         color_output = ColorOutput()
         return color_output(parser.prog, fg='green', style='bold+underline')
 
     @staticmethod
     def print_all_help(parser, in_color=False):
+        """Prints all available help"""
         print("%s\n" % Application.all_help_prog_header(parser))
         parser.print_help()
         if (
