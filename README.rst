@@ -40,6 +40,14 @@ Positionals
 ``version``
 -----------
 
+``version`` can be one of the following:
+
+* ``p``, ``patch``, or ``~`` for a patch bump
+* ``m``, ``minor``, or ``^`` for a minor bump
+* ``M`` or ``major`` for a major bump
+* ``X.Y.Z`` for a new, unconnected semver version
+* ``<any string>`` for a not semver version
+
 ``base``
 --------
 
