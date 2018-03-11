@@ -3,7 +3,6 @@
 from __future__ import print_function
 
 from re import compile as re_compile, match
-from subprocess import check_output
 
 from gitflow_easyrelease import RepoInfo
 
