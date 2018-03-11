@@ -5,5 +5,10 @@ setup(
     name='gitflow-easyrelease',
     version='0.0.0',
     packages=find_packages(),
-    include_package_data=True
+    include_package_data=True,
+    entry_points={
+        'console_scripts': [
+            'git-easyrelease = gitflow_easyrelease.cli:cli'
+        ]
+    }
 )
