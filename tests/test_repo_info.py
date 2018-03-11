@@ -183,8 +183,8 @@ class GetTagsUnitTests(RepoInfoTestCase):
 
 
 class GetSemverTagsUnitTests(RepoInfoTestCase):
-    TAGS = range(0, 10)
-    SEMVER_TAGS = range(0, 10, 2)
+    TAGS = list(range(0, 10))
+    SEMVER_TAGS = list(range(0, 10, 2))
     CALLS = [call(tag) for tag in TAGS]
 
     @patch('gitflow_easyrelease.repo_info.RepoInfo.get_tags', return_value=TAGS)
