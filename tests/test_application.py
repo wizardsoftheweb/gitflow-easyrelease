@@ -17,12 +17,6 @@ class ApplicationTestCase(TestCase):
     def setUp(self):
         self.construct_application()
         self.addCleanup(self.wipe_application)
-        self.subparsers = MagicMock()
-        self.mock_parser_add = MagicMock(return_value=self.subparsers)
-        self.parser = MagicMock(
-            add_subparsers=self.mock_parser_add,
-            add_argument=self.mock_parser_add
-        )
 
     def wipe_application(self):
         del self.application
@@ -43,6 +37,12 @@ class ApplicationTestCase(TestCase):
             )
         })
         self.application = Application(subcommands)
+        self.subparsers = MagicMock()
+        self.mock_parser_add = MagicMock(return_value=self.subparsers)
+        self.parser = MagicMock(
+            add_subparsers=self.mock_parser_add,
+            add_argument=self.mock_parser_add
+        )
 
 
 class ConstructorUnitTests(ApplicationTestCase):
@@ -162,7 +162,25 @@ class BootstrapUnitTests(ApplicationTestCase):
 
 
 class CreateRootParserUnitTests(ApplicationTestCase):
-    """"""
+
+    def setUp(self):
+        ApplicationTestCase.setUp(self)
+        argumentparser_patcher = patch(
+            'gitflow_easyrelease.application.ArgumentParser',
+            return_value=self.parser
+        )
+        self.mock_argumentparser = argumentparser_patcher.start()
+        self.addCleanup(argumentparser_patcher.stop)
+
+    def test_call(self):
+        self.mock_argumentparser.assert_not_called()
+        self.mock_parser_add.assert_not_called()
+        self.assertEqual(
+            Application.create_root_parser(),
+            self.parser
+        )
+        self.mock_argumentparser.assert_called_once()
+        self.mock_parser_add.assert_called_once()
 
 
 class ParseArgsUnitTests(ApplicationTestCase):
