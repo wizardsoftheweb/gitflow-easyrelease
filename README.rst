@@ -145,7 +145,7 @@ Once all of these are finished, I'll release `v1`. Until then, `v0` should be us
 
 .. csv-table::
     :header: "Progress", "Feature"
-    :widths: 10, auto
+    :widths: auto
 
     "100%", "Testing ``v0.2.0``"
 
