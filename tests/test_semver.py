@@ -375,4 +375,127 @@ class GetCurrentVersionUnitTests(SemVerTestCase):
 
 
 class ProcessVersionUnitTests(SemVerTestCase):
-    """"""
+    FROM_VERSION = SemVer(1, 2, 3)
+    WEIRD_VERSION = ' '.join(SemVer.ALL_KEYS)
+    SEMVER = '1.2.3'
+    COMPONENT = SemVer.MAJOR_KEYS[0]
+
+    def setUp(self):
+        SemVerTestCase.setUp(self)
+        from_version_patcher = patch.object(
+            SemVer,
+            'from_version',
+            return_value=self.FROM_VERSION
+        )
+        self.mock_from_version = from_version_patcher.start()
+        self.addCleanup(from_version_patcher.stop)
+        get_current_branch_patcher = patch.object(
+            SemVer,
+            'get_current_version',
+            return_value=SemVer()
+        )
+        self.mock_get_current_branch = get_current_branch_patcher.start()
+        self.addCleanup(get_current_branch_patcher.stop)
+        get_active_branch_patcher = patch.object(
+            SemVer,
+            'get_active_branch',
+            return_value=SemVer()
+        )
+        self.mock_get_active_branch = get_active_branch_patcher.start()
+        self.addCleanup(get_active_branch_patcher.stop)
+
+    @patch(
+        'gitflow_easyrelease.semver.is_semver',
+        return_value=False
+    )
+    @patch(
+        'gitflow_easyrelease.semver.SemVer.is_component',
+        return_value=False
+    )
+    def test_weird_version(self, mock_component, mock_is):
+        mock_is.assert_not_called()
+        self.mock_from_version.assert_not_called()
+        mock_component.assert_not_called()
+        self.mock_get_current_branch.assert_not_called()
+        self.mock_get_active_branch.assert_not_called()
+        self.assertEqual(
+            SemVer.process_version(self.WEIRD_VERSION),
+            self.WEIRD_VERSION
+        )
+        mock_is.assert_called_once_with(self.WEIRD_VERSION)
+        self.mock_from_version.assert_not_called()
+        mock_component.assert_called_once_with(self.WEIRD_VERSION)
+        self.mock_get_current_branch.assert_not_called()
+        self.mock_get_active_branch.assert_not_called()
+
+    @patch(
+        'gitflow_easyrelease.semver.is_semver',
+        return_value=True
+    )
+    @patch(
+        'gitflow_easyrelease.semver.SemVer.is_component',
+        return_value=False
+    )
+    def test_semver(self, mock_component, mock_is):
+        mock_is.assert_not_called()
+        self.mock_from_version.assert_not_called()
+        mock_component.assert_not_called()
+        self.mock_get_current_branch.assert_not_called()
+        self.mock_get_active_branch.assert_not_called()
+        self.assertEqual(
+            SemVer.process_version(self.SEMVER).__repr__(),
+            self.FROM_VERSION.__repr__()
+        )
+        mock_is.assert_called_once_with(self.SEMVER)
+        self.mock_from_version.assert_called_once_with(self.SEMVER)
+        mock_component.assert_not_called()
+        self.mock_get_current_branch.assert_not_called()
+        self.mock_get_active_branch.assert_not_called()
+
+    @patch(
+        'gitflow_easyrelease.semver.is_semver',
+        return_value=False
+    )
+    @patch(
+        'gitflow_easyrelease.semver.SemVer.is_component',
+        return_value=True
+    )
+    def test_component(self, mock_component, mock_is):
+        mock_is.assert_not_called()
+        self.mock_from_version.assert_not_called()
+        mock_component.assert_not_called()
+        self.mock_get_current_branch.assert_not_called()
+        self.mock_get_active_branch.assert_not_called()
+        self.assertEqual(
+            SemVer.process_version(self.COMPONENT).__repr__(),
+            '1.0.0'
+        )
+        mock_is.assert_called_once_with(self.COMPONENT)
+        self.mock_from_version.assert_not_called()
+        mock_component.assert_called_once_with(self.COMPONENT)
+        self.mock_get_current_branch.assert_called_once_with()
+        self.mock_get_active_branch.assert_not_called()
+
+    @patch(
+        'gitflow_easyrelease.semver.is_semver',
+        return_value=True
+    )
+    @patch(
+        'gitflow_easyrelease.semver.SemVer.is_component',
+        return_value=True
+    )
+    def test_none(self, mock_component, mock_is):
+        mock_is.assert_not_called()
+        self.mock_from_version.assert_not_called()
+        mock_component.assert_not_called()
+        self.mock_get_current_branch.assert_not_called()
+        self.mock_get_active_branch.assert_not_called()
+        self.assertEqual(
+            SemVer.process_version().__repr__(),
+            '0.0.0'
+        )
+        mock_is.assert_not_called()
+        self.mock_from_version.assert_not_called()
+        mock_component.assert_not_called()
+        self.mock_get_current_branch.assert_not_called()
+        self.mock_get_active_branch.assert_called_once_with()
