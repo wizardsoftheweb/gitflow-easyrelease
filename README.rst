@@ -145,6 +145,7 @@ Once all of these are finished, I'll release `v1`. Until then, `v0` should be us
 
 .. csv-table::
     :header: "Progress", "Feature"
+    :widths: 20, 80
 
     "100%", "Testing ``v0.2.0``"
 
@@ -155,6 +156,7 @@ These are things I'd like to add, but probably won't be included in `v1`. If not
 
 .. csv-table::
     :header: "Progress", "Feature"
+    :widths: 10, 90
 
     "10%", "``git config`` integration (or, rather, ``gitflow`` config integration"
     "0%", "Disable ``base`` without ``gitflow-avh``"
