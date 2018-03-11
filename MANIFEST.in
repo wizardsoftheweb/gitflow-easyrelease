@@ -1,5 +1,8 @@
 include gitflow_easyrelease/*.py
-include LICENSE
-include README.md
+include .editorconfig
+include .pylintrc
+include LICENSE.rst
+include README.rst
 include tox.ini
+include .bumpversion.cfg
 include setup.cfg
