@@ -112,19 +112,59 @@ class EnsureGitFlowUnitTests(RepoInfoTestCase):
 
 
 class GetReleasePrefixUnitTests(RepoInfoTestCase):
-    """"""
+
+    @staticmethod
+    @patch('gitflow_easyrelease.repo_info.check_output')
+    def test_call(mock_check):
+        mock_check.assert_not_called()
+        RepoInfo.get_release_prefix()
+        mock_check.assert_called_once_with([
+            'git',
+            'config',
+            'gitflow.prefix.release'
+        ])
 
 
 class GetActiveBranchUnitTests(RepoInfoTestCase):
-    """"""
+
+    @staticmethod
+    @patch('gitflow_easyrelease.repo_info.check_output')
+    def test_call(mock_check):
+        mock_check.assert_not_called()
+        RepoInfo.get_active_branch()
+        mock_check.assert_called_once_with([
+            'git',
+            'rev-parse',
+            '--abbrev-ref',
+            'HEAD'
+        ])
 
 
 class GetBranchesUnitTests(RepoInfoTestCase):
-    """"""
+
+    @staticmethod
+    @patch('gitflow_easyrelease.repo_info.check_output')
+    def test_call(mock_check):
+        mock_check.assert_not_called()
+        RepoInfo.get_branches()
+        mock_check.assert_called_once_with([
+            'git',
+            'for-each-ref',
+            '--format',
+            '%(refname:short)',
+            'refs/heads/',
+            'refs/remotes/'
+        ])
 
 
 class GetTagsUnitTests(RepoInfoTestCase):
-    """"""
+
+    @staticmethod
+    @patch('gitflow_easyrelease.repo_info.check_output')
+    def test_call(mock_check):
+        mock_check.assert_not_called()
+        RepoInfo.get_tags()
+        mock_check.assert_called_once_with(['git', 'tag'])
 
 
 class GetSemverTagsUnitTests(RepoInfoTestCase):
