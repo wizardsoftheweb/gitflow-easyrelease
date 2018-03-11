@@ -2,11 +2,12 @@
 
 from __future__ import print_function
 
+from pytest import mark
 from unittest import TestCase
 
 from mock import call, MagicMock, patch
 
-from gitflow_easyrelease import Subcommand
+from gitflow_easyrelease import SemVer, Subcommand
 
 
 class SubcommandTestCase(TestCase):
@@ -202,6 +203,47 @@ class AttachBaseArgumentUnitTests(SubcommandTestCase):
         Subcommand.attach_base_argument(self.parser)
         self.mock_add.assert_called_once()
 
+COMMON_SIGNATURE = ['git', 'flow', 'release']
 
-class ExecuteReleaseCommandUnitTests(SubcommandTestCase):
-    """"""
+
+@mark.parametrize(
+    "command,version,base,options,call_signature",
+    [
+        (
+            'start',
+            SemVer(),
+            None,
+            None,
+            COMMON_SIGNATURE + ['start', '0.0.0']
+        ),
+        (
+            'finish',
+            SemVer(),
+            'master',
+            None,
+            COMMON_SIGNATURE + ['finish', '0.0.0', 'master']
+        ),
+        (
+            'publish',
+            SemVer(),
+            None,
+            ['--show-commands'],
+            COMMON_SIGNATURE + ['publish', '0.0.0', '--show-commands']
+        ),
+    ]
+)
+@patch(
+    'gitflow_easyrelease.subcommand.check_output'
+)
+def test_execute_release_command(
+        mock_check,
+        command,
+        version,
+        base,
+        options,
+        call_signature,
+        # mock_check
+):
+    mock_check.assert_not_called()
+    Subcommand.execute_release_command(command, version, base, options)
+    mock_check.assert_called_once_with(call_signature)
