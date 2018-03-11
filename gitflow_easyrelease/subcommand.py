@@ -33,6 +33,7 @@ class Subcommand(object):
         self.has_base = has_base
 
     def attach_subparser(self, subparsers):
+        """Adds its subparser to the parent parser"""
         parser = subparsers.add_parser(
             self.subcommand,
             description=self.help_string,
@@ -45,6 +46,7 @@ class Subcommand(object):
             Subcommand.attach_base_argument(parser)
 
     def execute(self, parsed_args):
+        """Executes its action"""
         subcommand = parsed_args.subcommand
         version = (
             SemVer.process_version(parsed_args.version)
@@ -66,6 +68,7 @@ class Subcommand(object):
 
     @staticmethod
     def attach_version_argument(parser, version_optional=True):
+        """Adds a version input argument"""
         color_output = ColorOutput()
         options = {
             'help': (
@@ -86,6 +89,7 @@ class Subcommand(object):
 
     @staticmethod
     def get_branches():
+        """Gets all available branches"""
         return check_output([
             'git',
             'for-each-ref',
@@ -97,6 +101,7 @@ class Subcommand(object):
 
     @staticmethod
     def attach_base_argument(parser):
+        """Adds a base branch argument"""
         parser.add_argument(
             "base",
             nargs="?",
@@ -108,6 +113,7 @@ class Subcommand(object):
 
     @staticmethod
     def execute_release_command(command, version, base=None, options=None):
+        """Executes a specific git flow release subcommand"""
         command = ['git', 'flow', 'release', command, "%s" % version]
         if base:
             command.append(base)
