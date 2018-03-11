@@ -132,7 +132,7 @@ Once all of these are finished, I'll release `v1`. Until then, `v0` should be us
 
 | Progess | Feature |
 | ------: | ------- |
-|     83% | Testing |
+|     96% | Testing |
 
 ### Eventual Features
 
