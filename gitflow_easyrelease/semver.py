@@ -82,8 +82,10 @@ class SemVer(object):
     @staticmethod
     def get_active_branch():
         """Determines the active branch"""
-        repo_info = RepoInfo()
-        return SemVer(*repo_info.to_semver_args())
+        args = RepoInfo().to_semver_args()
+        if args:
+            return SemVer(*args)
+        return args
 
     @staticmethod
     def get_current_version():
@@ -93,10 +95,11 @@ class SemVer(object):
             return active
         versions = RepoInfo.get_semver_tags()
         if versions:
-            max_version = versions.pop()
+            max_version = SemVer.from_version(versions.pop())
             for version in versions:
-                if version.greater(max_version):
-                    max_version = version
+                semver = SemVer.from_version(version)
+                if semver.greater(max_version):
+                    max_version = semver
             return max_version
         return SemVer()
 
