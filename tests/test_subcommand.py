@@ -23,7 +23,12 @@ class SubcommandTestCase(TestCase):
 
 
 class ConstructorUnitTests(SubcommandTestCase):
-    """"""
+
+    def test_without_release_commands(self):
+        self.assertEqual(
+            self.subcommand.release_commands,
+            []
+        )
 
 
 class AttachSubparserUnitTests(SubcommandTestCase):
