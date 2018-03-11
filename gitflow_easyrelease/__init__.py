@@ -6,4 +6,4 @@ from .semver import SemVer
 from .color_output import ColorOutput
 from .subcommand import Subcommand
 from .application import Application
-from .cli import cli
+from .cli_file import cli
