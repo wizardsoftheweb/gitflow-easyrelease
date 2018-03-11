@@ -94,7 +94,15 @@ class ColorFactoryUnitTests(ColorOutputTestCase):
 
 
 class CallUnitTests(ColorOutputTestCase):
-    """"""
+
+    def setUp(self):
+        ColorOutputTestCase.setUp(self)
+        self.color_output.color = MagicMock()
+
+    def test_call(self):
+        self.color_output.color.assert_not_called()
+        self.color_output('one', two='three')
+        self.color_output.color.assert_called_once_with('one', two='three')
 
 
 class CanUseAnsiUnitTests(ColorOutputTestCase):
