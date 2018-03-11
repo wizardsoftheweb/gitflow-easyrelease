@@ -20,3 +20,55 @@ Installation
 .. code:: sh-session
 
     $ pip install --user gitflow-easyrelease
+
+Usage
+=====
+
+.. code:: sh-session
+
+    $ export PATH=~/.local/bin:$PATH
+    $ which git-easyrelease
+    ~/.local/bin/git-easyrelease
+    $ git easyrelease
+    < should print the main help >
+    $ git easyrelease --all-help
+    < dumps all the help >
+
+Positionals
+===========
+
+``version``
+-----------
+
+``base``
+--------
+
+Commands
+========
+
+``init``
+--------
+
+``quick``
+---------
+
+``start``
+---------
+
+``finish``
+----------
+
+``publish``
+-----------
+
+``delete``
+----------
+
+Roadmap
+=======
+
+Main Features
+-------------
+
+Eventual Features
+-----------------
