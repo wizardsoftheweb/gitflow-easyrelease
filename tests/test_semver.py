@@ -260,6 +260,17 @@ def test_compare_component(first, second, result):
     assert result == SemVer.compare_component(first, second)
 
 
+@mark.parametrize(
+    "version,result",
+    [
+        (''.join(SemVer.ALL_KEYS), False),
+        (SemVer.PATCH_KEYS[0], True)
+    ]
+)
+def test_is_component(version, result):
+    assert result == SemVer.is_component(version)
+
+
 class CompareComponentUnitTests(SemVerTestCase):
     """"""
 
