@@ -2,6 +2,7 @@
 
 from __future__ import print_function
 
+from subprocess import CalledProcessError
 from unittest import TestCase
 
 from mock import call, patch
@@ -115,7 +116,21 @@ class GetReleasePrefixUnitTests(RepoInfoTestCase):
 
     @staticmethod
     @patch('gitflow_easyrelease.repo_info.check_output')
-    def test_call(mock_check):
+    def test_success(mock_check):
+        mock_check.assert_not_called()
+        RepoInfo.get_release_prefix()
+        mock_check.assert_called_once_with([
+            'git',
+            'config',
+            'gitflow.prefix.release'
+        ])
+
+    @staticmethod
+    @patch(
+        'gitflow_easyrelease.repo_info.check_output',
+        side_effect=CalledProcessError(1, 'git config gitflow.prefix.release')
+    )
+    def test_failure(mock_check):
         mock_check.assert_not_called()
         RepoInfo.get_release_prefix()
         mock_check.assert_called_once_with([
