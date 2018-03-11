@@ -222,4 +222,40 @@ class AllHelpProgHeaderUnitTests(ApplicationTestCase):
 
 
 class PrintAllHelpUnitTests(ApplicationTestCase):
-    """"""
+
+    def setUp(self):
+        ApplicationTestCase.setUp(self)
+        self.mock_parser_help = MagicMock()
+        self.mock_subparser_help = MagicMock()
+        self.parser = MagicMock(
+            print_help=self.mock_parser_help,
+            _subparsers=MagicMock(
+                _actions=[
+                    MagicMock(
+                        choices={
+                            'any': MagicMock(
+                                print_help=self.mock_subparser_help
+                            )
+                        }
+                    )
+                ]
+            )
+        )
+        sys_exit_patcher = patch('gitflow_easyrelease.application.sys_exit')
+        self.mock_sys_exit = sys_exit_patcher.start()
+        self.addCleanup(sys_exit_patcher.stop)
+
+    def test_exit(self):
+        self.mock_sys_exit.assert_not_called()
+        Application.print_all_help(self.parser)
+        self.mock_sys_exit.assert_called_once_with(0)
+
+    def test_main_help(self):
+        self.mock_parser_help.assert_not_called()
+        Application.print_all_help(self.parser)
+        self.mock_parser_help.assert_called_with()
+
+    def test_subparser_help(self):
+        self.mock_subparser_help.assert_not_called()
+        Application.print_all_help(self.parser)
+        self.mock_subparser_help.assert_called_with()
