@@ -2,9 +2,11 @@
 
 from __future__ import print_function
 
+from subprocess import CalledProcessError
 from unittest import TestCase
 
 from mock import call, MagicMock, patch
+
 
 from gitflow_easyrelease import ColorOutput
 
@@ -106,7 +108,39 @@ class CallUnitTests(ColorOutputTestCase):
 
 
 class CanUseAnsiUnitTests(ColorOutputTestCase):
-    """"""
+
+    @patch(
+        'gitflow_easyrelease.color_output.check_output',
+        return_value=' 256 '
+    )
+    def test_easy_mode(self, mock_output):
+        mock_output.assert_not_called()
+        self.assertTrue(ColorOutput.can_use_ansi())
+        mock_output.assert_has_calls([
+            call(['which', 'tput']),
+            call(['tput', 'colors'])
+        ])
+
+    @patch(
+        'gitflow_easyrelease.color_output.check_output',
+        return_value=' 7 '
+    )
+    def test_weird_terminal(self, mock_output):
+        mock_output.assert_not_called()
+        self.assertFalse(ColorOutput.can_use_ansi())
+        mock_output.assert_has_calls([
+            call(['which', 'tput']),
+            call(['tput', 'colors'])
+        ])
+
+    @patch(
+        'gitflow_easyrelease.color_output.check_output',
+        side_effect=CalledProcessError('1', 'which output')
+    )
+    def test_no_tput(self, mock_output):
+        mock_output.assert_not_called()
+        self.assertFalse(ColorOutput.can_use_ansi())
+        mock_output.assert_called_once_with(['which', 'tput'])
 
 
 class NoColorUnitTests(ColorOutputTestCase):
