@@ -160,11 +160,47 @@ class ExecuteUnitTests(SubcommandTestCase):
 
 
 class AttachVersionArgumentUnitTests(SubcommandTestCase):
-    """"""
+    COLOR = MagicMock()
+
+    def setUp(self):
+        SubcommandTestCase.setUp(self)
+        color_output_patcher = patch(
+            'gitflow_easyrelease.subcommand.ColorOutput',
+            return_value=self.COLOR
+        )
+        self.mock_color_output = color_output_patcher.start()
+        self.addCleanup(color_output_patcher.stop)
+        self.mock_add = MagicMock()
+        self.parser = MagicMock(add_argument=self.mock_add)
+
+    def test_color_output(self):
+        self.mock_color_output.assert_not_called()
+        Subcommand.attach_version_argument(
+            self.parser,
+            self.subcommand.version_optional
+        )
+        self.mock_color_output.assert_called_once_with()
+
+    def test_add_call(self):
+        self.mock_add.assert_not_called()
+        Subcommand.attach_version_argument(
+            self.parser,
+            self.subcommand.version_optional
+        )
+        self.mock_add.assert_called_once()
 
 
 class AttachBaseArgumentUnitTests(SubcommandTestCase):
-    """"""
+
+    def setUp(self):
+        SubcommandTestCase.setUp(self)
+        self.mock_add = MagicMock()
+        self.parser = MagicMock(add_argument=self.mock_add)
+
+    def test_add_call(self):
+        self.mock_add.assert_not_called()
+        Subcommand.attach_base_argument(self.parser)
+        self.mock_add.assert_called_once()
 
 
 class ExecuteReleaseCommandUnitTests(SubcommandTestCase):
