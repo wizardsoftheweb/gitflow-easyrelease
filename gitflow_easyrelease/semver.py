@@ -20,6 +20,8 @@ class SemVer(object):
 
     def compare(self, version=None):
         """Compares its own semver against version"""
+        if not isinstance(version, SemVer):
+            version = SemVer.from_version(version)
         if version:
             for component in ['major', 'minor', 'patch']:
                 comparison = SemVer.compare_component(
@@ -72,7 +74,9 @@ class SemVer(object):
     @staticmethod
     def from_version(version):
         """Creates a SemVer object from a version string"""
-        return SemVer(*version.replace('v', '').split('.'))
+        if is_semver(version):
+            return SemVer(*version.replace('v', '').split('.'))
+        return SemVer()
 
     @staticmethod
     def is_component(version):
