@@ -67,8 +67,8 @@ $ git easyrelease --all-help
 Convenience method to seed the release with `0.0.0`. It runs
 
 ```sh-session
-git flow release start 0.0.0 <base>
-git flow release finish
+$ git flow release start 0.0.0 <base>
+$ git flow release finish
 ```
 
 ### `quick`
@@ -78,8 +78,8 @@ git flow release finish
 Convenience method to start and finish a release branch. It runs
 
 ```sh-session
-git flow release start <version> <base>
-git flow release finish
+$ git flow release start <version> <base>
+$ git flow release finish
 ```
 
 ### `start`
@@ -89,7 +89,7 @@ git flow release finish
 Extends `git flow release start` with extra semver functionality. It runs
 
 ```sh-session
-git flow release start <version> <base>
+$ git flow release start <version> <base>
 ```
 
 ### `finish`
@@ -99,7 +99,7 @@ git flow release start <version> <base>
 Extends `git flow release finish` with extra semver functionality. Without `version`, it attempts to `finish` the active branch. It runs
 
 ```sh-session
-git flow release finish <version>
+$ git flow release finish <version>
 ```
 
 ### `publish`
@@ -109,7 +109,7 @@ git flow release finish <version>
 Extends `git flow release publish` with extra semver functionality. Without `version`, it attempts to `publish` the active branch. It runs
 
 ```sh-session
-git flow release publish <version>
+$ git flow release publish <version>
 ```
 
 ### `delete`
@@ -119,7 +119,7 @@ git flow release publish <version>
 Extends `git flow release delete` with extra semver functionality. Without `version`, it attempts to `delete` the active branch. It runs
 
 ```sh-session
-git flow release delete <version>
+$ git flow release delete <version>
 ```
 
 ## Roadmap
