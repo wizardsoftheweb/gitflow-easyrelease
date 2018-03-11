@@ -102,7 +102,13 @@ class ToSemverArgsUnitTests(RepoInfoTestCase):
 
 
 class EnsureGitFlowUnitTests(RepoInfoTestCase):
-    """"""
+
+    @staticmethod
+    @patch('gitflow_easyrelease.repo_info.check_output')
+    def test_call(mock_check):
+        mock_check.assert_not_called()
+        RepoInfo.ensure_git_flow()
+        mock_check.assert_called_once_with(['which', 'git-flow'])
 
 
 class GetReleasePrefixUnitTests(RepoInfoTestCase):
