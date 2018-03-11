@@ -144,4 +144,10 @@ class CanUseAnsiUnitTests(ColorOutputTestCase):
 
 
 class NoColorUnitTests(ColorOutputTestCase):
-    """"""
+    TEXT = 'qqq'
+
+    def test_call(self):
+        self.assertEqual(
+            ColorOutput.no_color(self.TEXT, one='two'),
+            self.TEXT
+        )
