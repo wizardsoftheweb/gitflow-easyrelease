@@ -19,11 +19,19 @@ class ApplicationTestCase(TestCase):
         del self.application
 
     def construct_application(self):
+        ensure_git_flow_patcher = patch(
+            'gitflow_easyrelease.application.RepoInfo.ensure_git_flow',
+            return_value=True
+        )
+        self.mock_ensure_git_flow = ensure_git_flow_patcher.start()
+        self.addCleanup(ensure_git_flow_patcher.stop)
         self.application = Application()
 
 
 class ConstructorUnitTests(ApplicationTestCase):
-    """"""
+
+    def test_flow(self):
+        self.mock_ensure_git_flow.assert_called_once_with()
 
 
 class AttachSubparsersUnitTests(ApplicationTestCase):
