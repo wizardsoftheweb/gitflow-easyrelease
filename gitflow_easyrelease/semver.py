@@ -7,6 +7,7 @@ from subprocess import check_output
 
 
 class SemVer:
+    """This class encapsulates semantic versioning logic."""
 
     PATCH_KEYS = ['p', 'patch', '~']
     MINOR_KEYS = ['m', 'minor', '^']

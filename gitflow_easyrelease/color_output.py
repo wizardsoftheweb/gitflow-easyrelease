@@ -8,6 +8,11 @@ from colors import color
 
 
 class ColorOutput:
+    """
+    This is a callable class. Each instance checks to see if colors are
+    available, assigns a color method appropriately, and delegates calls to the
+    created color method.
+    """
 
     def __init__(self, force_color=False, block_color=False):
         self.force_color = force_color

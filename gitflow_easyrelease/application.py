@@ -11,6 +11,9 @@ from argparse_color_formatter import ColorHelpFormatter
 
 
 class Application:
+    """
+    This class parses arguments and performs the desired action.
+    """
 
     def __init__(self, subcommands=None):
         Application.ensure_git_flow()

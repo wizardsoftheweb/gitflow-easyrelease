@@ -10,6 +10,7 @@ from gitflow_easyrelease import ColorOutput, SemVer
 
 
 class Subcommand:
+    """This class defines a subcommand to be run against the main app."""
 
     def __init__(
             self,

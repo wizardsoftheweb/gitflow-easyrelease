@@ -6,6 +6,8 @@ from subprocess import check_output
 
 
 class Git:
+    """This utility class provides information about the underlying repo"""
+    # TODO: rename
 
     def __init__(self):
         self.prefix = Git.get_release_prefix()
