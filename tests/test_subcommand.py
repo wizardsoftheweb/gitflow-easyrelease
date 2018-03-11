@@ -89,7 +89,74 @@ class AttachSubparserUnitTests(SubcommandTestCase):
 
 
 class ExecuteUnitTests(SubcommandTestCase):
-    """"""
+    VERSION = MagicMock()
+    BASE_BRANCH = 'qqq'
+    OPTIONS = '--show-commands'
+    RELEASE_COMMANDS = ['one']
+
+    def setUp(self):
+        SubcommandTestCase.setUp(self)
+        self.subcommand.release_commands = self.RELEASE_COMMANDS
+        execute_release_command_patcher = patch.object(
+            Subcommand,
+            'execute_release_command'
+        )
+        self.mock_execute_release_command = execute_release_command_patcher.start()
+        self.addCleanup(execute_release_command_patcher.stop)
+
+    @patch(
+        'gitflow_easyrelease.subcommand.SemVer.process_version',
+        return_value=None
+    )
+    def test_missing_version(self, mock_process):
+        self.subcommand.has_version = True
+        mock_process.assert_not_called()
+        self.mock_execute_release_command.assert_not_called()
+        with self.assertRaises(ValueError):
+            self.subcommand.execute(MagicMock(version=None, spec=['version']))
+            mock_process.assert_called_once_with(None)
+            self.mock_execute_release_command.assert_not_called()
+
+    @patch(
+        'gitflow_easyrelease.subcommand.SemVer',
+        return_value=VERSION
+    )
+    def test_valid_version(self, mock_semver):
+        mock_semver.assert_not_called()
+        self.mock_execute_release_command.assert_not_called()
+        self.subcommand.execute(MagicMock(spec=[]))
+        mock_semver.assert_called_once_with()
+        self.mock_execute_release_command.assert_has_calls([
+            call(self.RELEASE_COMMANDS[0], self.VERSION, None, None)
+        ])
+
+    @patch(
+        'gitflow_easyrelease.subcommand.SemVer',
+        MagicMock(return_value=VERSION)
+    )
+    def test_with_base(self):
+        self.mock_execute_release_command.assert_not_called()
+        self.subcommand.execute(MagicMock(
+            base=self.BASE_BRANCH,
+            spec=['base']
+        ))
+        self.mock_execute_release_command.assert_has_calls([
+            call(self.RELEASE_COMMANDS[0], self.VERSION, 'qqq', None)
+        ])
+
+    @patch(
+        'gitflow_easyrelease.subcommand.SemVer',
+        MagicMock(return_value=VERSION)
+    )
+    def test_with_options(self):
+        self.mock_execute_release_command.assert_not_called()
+        self.subcommand.execute(MagicMock(
+            options=self.OPTIONS,
+            spec=['options']
+        ))
+        self.mock_execute_release_command.assert_has_calls([
+            call(self.RELEASE_COMMANDS[0], self.VERSION, None, self.OPTIONS)
+        ])
 
 
 class AttachVersionArgumentUnitTests(SubcommandTestCase):
