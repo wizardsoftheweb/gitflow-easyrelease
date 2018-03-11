@@ -198,10 +198,16 @@ class AttachBaseArgumentUnitTests(SubcommandTestCase):
         self.mock_add = MagicMock()
         self.parser = MagicMock(add_argument=self.mock_add)
 
-    def test_add_call(self):
+    @patch(
+        'gitflow_easyrelease.subcommand.RepoInfo.get_branches',
+        return_value=[]
+    )
+    def test_add_call(self, mock_branches):
+        mock_branches.assert_not_called()
         self.mock_add.assert_not_called()
         Subcommand.attach_base_argument(self.parser)
         self.mock_add.assert_called_once()
+        mock_branches.assert_called_once_with()
 
 COMMON_SIGNATURE = ['git', 'flow', 'release']
 
