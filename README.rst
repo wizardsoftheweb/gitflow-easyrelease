@@ -136,8 +136,14 @@ Extends ``git flow release delete`` with extra semver functionality. Without ``v
 Roadmap
 =======
 
+These percentages are pretty arbitrary. Today's 47% could be tomorrow's 90% or vice versa.
+
 Main Features
 -------------
 
+Once all of these are finished, I'll release `v1`. Until then, `v0` should be used with caution, because it's not stable.
+
 Eventual Features
 -----------------
+
+These are things I'd like to add, but probably won't be included in `v1`. If not, they'll most likely constitute one or more minor version increments.
