@@ -362,6 +362,10 @@ class GetCurrentVersionUnitTests(SemVerTestCase):
         )
 
     @patch(
+        'gitflow_easyrelease.semver.SemVer.get_active_branch',
+        RETURN_NONE
+    )
+    @patch(
         'gitflow_easyrelease.semver.RepoInfo.get_semver_tags',
         return_value=TAGS
     )
