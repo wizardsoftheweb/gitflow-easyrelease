@@ -260,17 +260,6 @@ def test_compare_component(first, second, result):
     assert result == SemVer.compare_component(first, second)
 
 
-@mark.parametrize(
-    "version,result",
-    [
-        (''.join(SemVer.ALL_KEYS), False),
-        (SemVer.PATCH_KEYS[0], True)
-    ]
-)
-def test_is_component(version, result):
-    assert result == SemVer.is_component(version)
-
-
 class FromVersionUnitTests(SemVerTestCase):
     VERSION = '1.2.3'
 
@@ -301,12 +290,39 @@ class FromVersionUnitTests(SemVerTestCase):
         )
 
 
-class IsComponentUnitTests(SemVerTestCase):
-    """"""
+@mark.parametrize(
+    "version,result",
+    [
+        (''.join(SemVer.ALL_KEYS), False),
+        (SemVer.PATCH_KEYS[0], True)
+    ]
+)
+def test_is_component(version, result):
+    assert result == SemVer.is_component(version)
 
 
 class GetActiveBranchUnitTests(SemVerTestCase):
-    """"""
+
+    @patch(
+        'gitflow_easyrelease.semver.RepoInfo.to_semver_args',
+        return_value=None
+    )
+    def test_without_release_branch(self, mock_args):
+        mock_args.assert_not_called()
+        self.assertIsNone(SemVer.get_active_branch())
+        mock_args.assert_called_once_with()
+
+    @patch(
+        'gitflow_easyrelease.semver.RepoInfo.to_semver_args',
+        return_value=[1, 2, 3]
+    )
+    def test_with_release_branch(self, mock_args):
+        mock_args.assert_not_called()
+        self.assertEqual(
+            SemVer.get_active_branch().__repr__(),
+            '1.2.3'
+        )
+        mock_args.assert_called_once_with()
 
 
 class GetCurrentVersionUnitTests(SemVerTestCase):
