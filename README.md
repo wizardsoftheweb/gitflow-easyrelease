@@ -1,6 +1,6 @@
 # `gitflow-easyrelease`
 
-[![Build Status](https://travis-ci.org/wizardsoftheweb/gitflow-easyrelease.svg?branch=master)](https://travis-ci.org/wizardsoftheweb/gitflow-easyrelease) [![Coverage Status](https://coveralls.io/repos/github/wizardsoftheweb/gitflow-easyrelease/badge.svg?branch=master)](https://coveralls.io/github/wizardsoftheweb/gitflow-easyrelease?branch=master)
+[![PyPI version](https://badge.fury.io/py/gitflow-easyrelease.svg)](https://badge.fury.io/py/gitflow-easyrelease) [![Build Status](https://travis-ci.org/wizardsoftheweb/gitflow-easyrelease.svg?branch=master)](https://travis-ci.org/wizardsoftheweb/gitflow-easyrelease) [![Coverage Status](https://coveralls.io/repos/github/wizardsoftheweb/gitflow-easyrelease/badge.svg?branch=master)](https://coveralls.io/github/wizardsoftheweb/gitflow-easyrelease?branch=master)
 
 `gitflow-easyrelease` aims to streamline `git flow release` commands. It adds some [semver](https://semver.org/) shortcuts as well.
 
