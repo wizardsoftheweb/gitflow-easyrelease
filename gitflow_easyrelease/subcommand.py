@@ -6,7 +6,7 @@ from subprocess import check_output
 
 from argparse_color_formatter import ColorHelpFormatter
 
-from gitflow_easyrelease import ColorOutput, SemVer
+from gitflow_easyrelease import ColorOutput, RepoInfo, SemVer
 
 
 class Subcommand(object):
@@ -87,18 +87,6 @@ class Subcommand(object):
         parser.add_argument('version', **options)
 
     @staticmethod
-    def get_branches():
-        """Gets all available branches"""
-        return check_output([
-            'git',
-            'for-each-ref',
-            '--format',
-            '%(refname:short)',
-            'refs/heads/',
-            'refs/remotes/'
-        ]).strip().split('\n')
-
-    @staticmethod
     def attach_base_argument(parser):
         """Adds a base branch argument"""
         parser.add_argument(
@@ -106,7 +94,7 @@ class Subcommand(object):
             nargs="?",
             default=None,
             help="Optional base branch",
-            choices=Subcommand.get_branches(),
+            choices=RepoInfo.get_branches(),
             type=str
         )
 
