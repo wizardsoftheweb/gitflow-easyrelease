@@ -10,6 +10,9 @@ from gitflow_easyrelease import RepoInfo
 
 
 class RepoInfoTestCase(TestCase):
+    PREFIX = 'release/'
+    FEATURE_BRANCH = 'feature/qqq'
+    RELEASE_BRANCH = 'release/zzz'
 
     def setUp(self):
         self.construct_repo()
@@ -42,21 +45,35 @@ class ConstructorUnitTests(RepoInfoTestCase):
 
 
 class IsReleaseBranchUnitTests(RepoInfoTestCase):
-    PREFIX = 'release/'
-    NOT_RELEASE_BRANCH = 'feature/qqq'
-    RELEASE_BRANCH = 'release/zzz'
 
     def setUp(self):
         RepoInfoTestCase.setUp(self)
         self.repo_info.prefix = self.PREFIX
 
     def test_doesnt_start_with(self):
-        self.repo_info.branch = self.NOT_RELEASE_BRANCH
+        self.repo_info.branch = self.FEATURE_BRANCH
         self.assertFalse(self.repo_info.is_release_branch())
 
 
 class TidyBranchUnitTests(RepoInfoTestCase):
-    """"""
+
+    def setUp(self):
+        RepoInfoTestCase.setUp(self)
+        self.repo_info.prefix = self.PREFIX
+
+    def test_tidy_feature_branch(self):
+        self.repo_info.branch = self.FEATURE_BRANCH
+        self.assertEqual(
+            self.repo_info.tidy_branch(),
+            self.FEATURE_BRANCH
+        )
+
+    def test_tidy_release_branch(self):
+        self.repo_info.branch = self.RELEASE_BRANCH
+        self.assertEqual(
+            self.repo_info.tidy_branch(),
+            'zzz'
+        )
 
 
 class ToSemverArgsUnitTests(RepoInfoTestCase):
