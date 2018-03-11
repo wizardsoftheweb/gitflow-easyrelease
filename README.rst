@@ -8,7 +8,7 @@
     :target: https://coveralls.io/github/wizardsoftheweb/gitflow-easyrelease?branch=master
 
 ``gitflow-easyrelease``
-=======================
+~~~~~~~~~~~~~~~~~~~~~~~
 
 ``gitflow-easyrelease`` aims to streamline ``git flow release`` commands. It adds some `semver <https://semver.org/>`__ shortcuts as well.
 
