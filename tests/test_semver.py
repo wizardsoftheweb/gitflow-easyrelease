@@ -185,7 +185,66 @@ class EqualUnitTests(SemVerTestCase):
 
 
 class BumpUnitTests(SemVerTestCase):
-    """"""
+    MAJOR = 1
+    MINOR = 2
+    PATCH = 3
+
+    def setUp(self):
+        SemVerTestCase.setUp(self)
+        self.reset_semver()
+
+    def reset_semver(self):
+        self.semver = SemVer(self.MAJOR, self.MINOR, self.PATCH)
+
+    def test_bump_nothing(self):
+        self.assertEqual(
+            self.semver.__repr__(),
+            '1.2.3'
+        )
+        self.semver.bump(' '.join(SemVer.ALL_KEYS))
+        self.assertEqual(
+            self.semver.__repr__(),
+            '1.2.3'
+        )
+
+    def test_patch_bump(self):
+        for component in SemVer.PATCH_KEYS:
+            self.reset_semver()
+            self.assertEqual(
+                self.semver.__repr__(),
+                '1.2.3'
+            )
+            self.semver.bump(component)
+            self.assertEqual(
+                self.semver.__repr__(),
+                '1.2.4'
+            )
+
+    def test_minor_bump(self):
+        for component in SemVer.MINOR_KEYS:
+            self.reset_semver()
+            self.assertEqual(
+                self.semver.__repr__(),
+                '1.2.3'
+            )
+            self.semver.bump(component)
+            self.assertEqual(
+                self.semver.__repr__(),
+                '1.3.0'
+            )
+
+    def test_major_bump(self):
+        for component in SemVer.MAJOR_KEYS:
+            self.reset_semver()
+            self.assertEqual(
+                self.semver.__repr__(),
+                '1.2.3'
+            )
+            self.semver.bump(component)
+            self.assertEqual(
+                self.semver.__repr__(),
+                '2.0.0'
+            )
 
 
 class ReprUnitTests(SemVerTestCase):
