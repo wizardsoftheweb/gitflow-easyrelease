@@ -47,7 +47,6 @@ class Subcommand(object):
 
     def execute(self, parsed_args):
         """Executes its action"""
-        subcommand = parsed_args.subcommand
         version = (
             SemVer.process_version(parsed_args.version)
             if self.has_version

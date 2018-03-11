@@ -42,6 +42,6 @@ class ColorOutput(object):
         return False
 
     @staticmethod
-    def no_color(text_to_color, **kwargs):
+    def no_color(text_to_color, **kwargs):  # pylint:disable=unused-argument
         """Returns the text undecorated"""
         return text_to_color

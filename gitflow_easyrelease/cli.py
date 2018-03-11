@@ -7,7 +7,7 @@ from collections import OrderedDict
 from gitflow_easyrelease import Application, ColorOutput, Subcommand
 
 
-def cli(args=None):
+def cli():
     """Runs module from the CLI"""
     color_output = ColorOutput()
     subcommands = OrderedDict()

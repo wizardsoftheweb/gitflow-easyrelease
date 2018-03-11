@@ -104,7 +104,7 @@ class Application(object):
         return color_output(parser.prog, fg='green', style='bold+underline')
 
     @staticmethod
-    def print_all_help(parser, in_color=False):
+    def print_all_help(parser):
         """Prints all available help"""
         print("%s\n" % Application.all_help_prog_header(parser))
         parser.print_help()
