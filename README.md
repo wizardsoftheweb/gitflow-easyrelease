@@ -141,3 +141,4 @@ These are things I'd like to add, but probably won't be included in `v1`. If not
 | Progess | Feature |
 | ------: | ------- |
 |     10% | `git config` integration (or, rather, `gitflow` config integration) |
+|      0% | Disable `base` without `gitflow-avh` |
