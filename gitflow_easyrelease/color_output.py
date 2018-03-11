@@ -7,7 +7,7 @@ from subprocess import CalledProcessError, check_output
 from colors import color
 
 
-class ColorOutput:
+class ColorOutput(object):
     """
     This is a callable class. Each instance checks to see if colors are
     available, assigns a color method appropriately, and delegates calls to the

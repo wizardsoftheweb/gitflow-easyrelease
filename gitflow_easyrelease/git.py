@@ -5,7 +5,7 @@ from __future__ import print_function
 from subprocess import check_output
 
 
-class Git:
+class Git(object):
     """This utility class provides information about the underlying repo"""
     # TODO: rename
 

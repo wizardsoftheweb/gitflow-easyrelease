@@ -6,7 +6,7 @@ from re import compile as re_compile, match
 from subprocess import check_output
 
 
-class SemVer:
+class SemVer(object):
     """This class encapsulates semantic versioning logic."""
 
     PATCH_KEYS = ['p', 'patch', '~']

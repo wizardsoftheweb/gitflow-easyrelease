@@ -9,7 +9,7 @@ from argparse_color_formatter import ColorHelpFormatter
 from gitflow_easyrelease import ColorOutput, SemVer
 
 
-class Subcommand:
+class Subcommand(object):
     """This class defines a subcommand to be run against the main app."""
 
     def __init__(

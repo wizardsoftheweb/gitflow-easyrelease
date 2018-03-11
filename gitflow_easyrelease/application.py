@@ -10,7 +10,7 @@ from sys import argv, exit as sys_exit
 from argparse_color_formatter import ColorHelpFormatter
 
 
-class Application:
+class Application(object):
     """
     This class parses arguments and performs the desired action.
     """
