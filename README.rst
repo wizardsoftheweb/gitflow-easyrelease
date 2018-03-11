@@ -17,14 +17,14 @@
 Installation
 ============
 
-.. code:: sh-session
+.. code:: shell-session
 
     $ pip install --user gitflow-easyrelease
 
 Usage
 =====
 
-.. code:: sh-session
+.. code:: shell-session
 
     $ export PATH=~/.local/bin:$PATH
     $ which git-easyrelease
@@ -66,7 +66,7 @@ Commands
 
 Convenience method to seed the release with ``0.0.0``. It runs
 
-.. code:: sh-session
+.. code:: shell-session
 
     $ git flow release start 0.0.0 <base>
     $ git flow release finish
@@ -79,7 +79,7 @@ Convenience method to seed the release with ``0.0.0``. It runs
 
 Convenience method to start and finish a release branch. It runs
 
-.. code:: sh-session
+.. code:: shell-session
 
     $ git flow release start <version> <base>
     $ git flow release finish
@@ -92,7 +92,7 @@ Convenience method to start and finish a release branch. It runs
 
 Extends ``git flow release start`` with extra semver functionality. It runs
 
-.. code:: sh-session
+.. code:: shell-session
 
     $ git flow release start <version> <base>
 
@@ -104,7 +104,7 @@ Extends ``git flow release start`` with extra semver functionality. It runs
 
 Extends ``git flow release finish`` with extra semver functionality. Without ``version``, it attempts to ``finish`` the active branch. It runs
 
-.. code:: sh-session
+.. code:: shell-session
 
     $ git flow release finish <version>
 
@@ -116,7 +116,7 @@ Extends ``git flow release finish`` with extra semver functionality. Without ``v
 
 Extends ``git flow release publish`` with extra semver functionality. Without ``version``, it attempts to ``publish`` the active branch. It runs
 
-.. code:: sh-session
+.. code:: shell-session
 
     $ git flow release publish <version>
 
@@ -128,7 +128,7 @@ Extends ``git flow release publish`` with extra semver functionality. Without ``
 
 Extends ``git flow release delete`` with extra semver functionality. Without ``version``, it attempts to ``delete`` the active branch. It runs
 
-.. code:: sh-session
+.. code:: shell-session
 
     $ git flow release delete <version>
 
