@@ -23,7 +23,12 @@ class SemVerTestCase(TestCase):
 
 
 class ConstructorUnitTests(SemVerTestCase):
-    """"""
+
+    def test_defaults(self):
+        self.assertEqual(
+            self.semver.__repr__(),
+            '0.0.0'
+        )
 
 
 class CompareUnitTests(SemVerTestCase):
