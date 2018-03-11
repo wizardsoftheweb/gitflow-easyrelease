@@ -271,12 +271,34 @@ def test_is_component(version, result):
     assert result == SemVer.is_component(version)
 
 
-class CompareComponentUnitTests(SemVerTestCase):
-    """"""
-
-
 class FromVersionUnitTests(SemVerTestCase):
-    """"""
+    VERSION = '1.2.3'
+
+    @patch(
+        'gitflow_easyrelease.semver.is_semver',
+        return_value=True
+    )
+    def test_with_semver_version(self, mock_is_semver):
+        mock_is_semver.assert_not_called()
+        result = SemVer.from_version(self.VERSION)
+        mock_is_semver.assert_called_once_with(self.VERSION)
+        self.assertEqual(
+            result.__repr__(),
+            self.VERSION
+        )
+
+    @patch(
+        'gitflow_easyrelease.semver.is_semver',
+        return_value=False
+    )
+    def test_without_semver_version(self, mock_is_semver):
+        mock_is_semver.assert_not_called()
+        result = SemVer.from_version(self.VERSION)
+        mock_is_semver.assert_called_once_with(self.VERSION)
+        self.assertEqual(
+            result.__repr__(),
+            '0.0.0'
+        )
 
 
 class IsComponentUnitTests(SemVerTestCase):
