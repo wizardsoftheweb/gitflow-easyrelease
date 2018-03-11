@@ -9,7 +9,7 @@ from sys import argv, exit as sys_exit
 
 from argparse_color_formatter import ColorHelpFormatter
 
-from gitflow_easyrelease import ColorOutput
+from gitflow_easyrelease import ColorOutput, RepoInfo
 
 
 class Application(object):
@@ -18,7 +18,7 @@ class Application(object):
     """
 
     def __init__(self, subcommands=None):
-        Application.ensure_git_flow()
+        RepoInfo.ensure_git_flow()
         self.subcommands = (
             subcommands
             if subcommands
@@ -68,11 +68,6 @@ class Application(object):
             )
             setattr(parsed_args, 'options', options)
             self.subcommands[parsed_args.subcommand].execute(parsed_args)
-
-    @staticmethod
-    def ensure_git_flow():
-        """Ensures git flow is available"""
-        check_output(['which', 'git-flow'])
 
     @staticmethod
     def create_root_parser():
