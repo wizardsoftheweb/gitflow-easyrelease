@@ -2,6 +2,7 @@
 
 from __future__ import print_function
 
+from collections import OrderedDict
 from unittest import TestCase
 
 from mock import call, MagicMock, patch
@@ -10,6 +11,7 @@ from gitflow_easyrelease import Application
 
 
 class ApplicationTestCase(TestCase):
+    SUBCOMMAND_KEY = 'quick'
 
     def setUp(self):
         self.construct_application()
@@ -25,7 +27,15 @@ class ApplicationTestCase(TestCase):
         )
         self.mock_ensure_git_flow = ensure_git_flow_patcher.start()
         self.addCleanup(ensure_git_flow_patcher.stop)
-        self.application = Application()
+        self.mock_sub_attach = MagicMock()
+        self.mock_sub_execute = MagicMock()
+        subcommands = OrderedDict({
+            self.SUBCOMMAND_KEY: MagicMock(
+                attach_subparser=self.mock_sub_attach,
+                execute=self.mock_sub_execute
+            )
+        })
+        self.application = Application(subcommands)
 
 
 class ConstructorUnitTests(ApplicationTestCase):
@@ -35,7 +45,22 @@ class ConstructorUnitTests(ApplicationTestCase):
 
 
 class AttachSubparsersUnitTests(ApplicationTestCase):
-    """"""
+
+    def setUp(self):
+        ApplicationTestCase.setUp(self)
+        self.subparsers = MagicMock()
+        self.mock_parser_add = MagicMock(return_value=self.subparsers)
+        self.parser = MagicMock(add_subparsers=self.mock_parser_add)
+
+    def test_subparser_add(self):
+        self.mock_parser_add.assert_not_called()
+        self.application.attach_subparsers(self.parser)
+        self.mock_parser_add.assert_called_once()
+
+    def test_subcommand_attach(self):
+        self.mock_sub_attach.assert_not_called()
+        self.application.attach_subparsers(self.parser)
+        self.mock_sub_attach.assert_called_once_with(self.subparsers)
 
 
 class PopulateRootParserUnitTests(ApplicationTestCase):
