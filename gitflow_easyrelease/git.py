@@ -9,11 +9,12 @@ from sys import argv, exit as sys_exit
 from argparse_color_formatter import ColorHelpFormatter
 from colors import color
 
+
 class Git:
 
     def __init__(self):
-        self.prefix = RepoMetadata.get_release_prefix()
-        self.branch = RepoMetadata.get_active_branch()
+        self.prefix = Git.get_release_prefix()
+        self.branch = Git.get_active_branch()
 
     def is_release_branch(self):
         return self.branch.startswith(self.prefix)
@@ -21,10 +22,6 @@ class Git:
     @staticmethod
     def ensure_git_flow():
         check_output(['which', 'git-flow'])
-
-    @staticmethod
-    def get_branches():
-        print('cool')
 
     @staticmethod
     def get_release_prefix():
