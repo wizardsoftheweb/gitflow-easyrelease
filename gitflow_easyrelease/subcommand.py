@@ -9,6 +9,8 @@ from sys import argv, exit as sys_exit
 from argparse_color_formatter import ColorHelpFormatter
 from colors import color
 
+from gitflow_easyrelease import ColorOutput, SemVer
+
 
 class Subcommand:
 
