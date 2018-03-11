@@ -143,13 +143,10 @@ Main Features
 
 Once all of these are finished, I'll release `v1`. Until then, `v0` should be used with caution, because it's not stable.
 
-.. list-table::
-    :header-rows: 1
+.. csv-table::
+    :header: "Progress", "Feature"
 
-    * - Progress
-      - Feature
-    * - 100%
-      - Testing ``v0.2.0``
+    "100%", "Testing ``v0.2.0``"
 
 Eventual Features
 -----------------
