@@ -39,3 +39,39 @@ class ConstructorUnitTests(RepoInfoTestCase):
     def test_calls(self):
         self.mock_get_release_prefix.assert_called_once_with()
         self.mock_get_active_branch.assert_called_once_with()
+
+
+class IsReleaseBranchUnitTests(RepoInfoTestCase):
+    """"""
+
+
+class TidyBranchUnitTests(RepoInfoTestCase):
+    """"""
+
+
+class ToSemverArgsUnitTests(RepoInfoTestCase):
+    """"""
+
+
+class EnsureGitFlowUnitTests(RepoInfoTestCase):
+    """"""
+
+
+class GetReleasePrefixUnitTests(RepoInfoTestCase):
+    """"""
+
+
+class GetActiveBranchUnitTests(RepoInfoTestCase):
+    """"""
+
+
+class GetBranchesUnitTests(RepoInfoTestCase):
+    """"""
+
+
+class GetTagsUnitTests(RepoInfoTestCase):
+    """"""
+
+
+class GetSemverTagsUnitTests(RepoInfoTestCase):
+    """"""
