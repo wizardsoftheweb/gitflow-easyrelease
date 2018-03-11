@@ -1,6 +1,6 @@
 # `gitflow-easyrelease`
 
-[![Build Status](https://travis-ci.org/wizardsoftheweb/gitflow-easyrelease.svg?branch=master)](https://travis-ci.org/wizardsoftheweb/gitflow-easyrelease) [![Coverage Status](https://coveralls.io/repos/github/wizardsoftheweb/gitflow-easyrelease/badge.svg?branch=master)](https://coveralls.io/github/wizardsoftheweb/gitflow-easyrelease?branch=master)
+[![PyPI version](https://badge.fury.io/py/gitflow-easyrelease.svg)](https://badge.fury.io/py/gitflow-easyrelease) [![Build Status](https://travis-ci.org/wizardsoftheweb/gitflow-easyrelease.svg?branch=master)](https://travis-ci.org/wizardsoftheweb/gitflow-easyrelease) [![Coverage Status](https://coveralls.io/repos/github/wizardsoftheweb/gitflow-easyrelease/badge.svg?branch=master)](https://coveralls.io/github/wizardsoftheweb/gitflow-easyrelease?branch=master)
 
 `gitflow-easyrelease` aims to streamline `git flow release` commands. It adds some [semver](https://semver.org/) shortcuts as well.
 
@@ -130,14 +130,15 @@ These percentages are pretty arbitrary. Today's 47% could be tomorrow's 90% or v
 
 Once all of these are finished, I'll release `v1`. Until then, `v0` should be used with caution, because it's not stable.
 
-| Progess | Feature |
-| ------: | ------- |
-|      0% | Testing |
+| Progress | Feature |
+| -------: | ------- |
+|     100% | Testing `v0.2.0` |
 
 ### Eventual Features
 
 These are things I'd like to add, but probably won't be included in `v1`. If not, they'll most likely constitute one or more minor version increments.
 
-| Progess | Feature |
-| ------: | ------- |
-|     10% | `git config` integration (or, rather, `gitflow` config integration) |
+| Progress | Feature |
+| -------: | ------- |
+|      10% | `git config` integration (or, rather, `gitflow` config integration) |
+|       0% | Disable `base` without `gitflow-avh` |

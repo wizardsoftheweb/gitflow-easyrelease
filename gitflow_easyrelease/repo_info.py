@@ -2,7 +2,7 @@
 
 from __future__ import print_function
 
-from subprocess import check_output
+from subprocess import CalledProcessError, check_output
 
 from gitflow_easyrelease import is_semver
 
@@ -37,11 +37,14 @@ class RepoInfo(object):
     @staticmethod
     def get_release_prefix():
         """Determines the git flow release branch prefix"""
-        return check_output([
-            'git',
-            'config',
-            'gitflow.prefix.release'
-        ]).strip()
+        try:
+            return check_output([
+                'git',
+                'config',
+                'gitflow.prefix.release'
+            ]).strip()
+        except CalledProcessError:
+            return 'release/'
 
     @staticmethod
     def get_active_branch():

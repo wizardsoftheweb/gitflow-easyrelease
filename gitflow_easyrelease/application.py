@@ -4,7 +4,6 @@ from __future__ import print_function
 
 from argparse import ArgumentParser
 from collections import OrderedDict
-from subprocess import check_output
 from sys import argv, exit as sys_exit
 
 from argparse_color_formatter import ColorHelpFormatter
