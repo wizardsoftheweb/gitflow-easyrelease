@@ -77,7 +77,28 @@ class TidyBranchUnitTests(RepoInfoTestCase):
 
 
 class ToSemverArgsUnitTests(RepoInfoTestCase):
-    """"""
+    SEMVER = '1.2.3'
+
+    @patch.object(RepoInfo, 'tidy_branch', return_value=SEMVER)
+    @patch.object(RepoInfo, 'is_release_branch', return_value=False)
+    def test_feature_branch(self, mock_release, mock_tidy):
+        mock_tidy.assert_not_called()
+        mock_release.assert_not_called()
+        self.assertIsNone(self.repo_info.to_semver_args())
+        mock_tidy.assert_not_called()
+        mock_release.assert_called_once_with()
+
+    @patch.object(RepoInfo, 'tidy_branch', return_value=SEMVER)
+    @patch.object(RepoInfo, 'is_release_branch', return_value=True)
+    def test_release_branch(self, mock_release, mock_tidy):
+        mock_tidy.assert_not_called()
+        mock_release.assert_not_called()
+        self.assertEqual(
+            ['1', '2', '3'],
+            self.repo_info.to_semver_args()
+        )
+        mock_tidy.assert_called_once_with()
+        mock_release.assert_called_once_with()
 
 
 class EnsureGitFlowUnitTests(RepoInfoTestCase):
