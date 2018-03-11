@@ -104,11 +104,7 @@ class SemVer(object):
         active = SemVer.get_active_branch()
         if active:
             return active
-        versions = [
-            SemVer.from_version(version)
-            for version in check_output(['git', 'tag']).strip().split('\n')
-            if SemVer.is_semver(version)
-        ]
+        versions = RepoInfo.get_semver_tags()
         if versions:
             max_version = versions.pop()
             for version in versions:
