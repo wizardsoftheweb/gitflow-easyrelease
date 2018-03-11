@@ -22,6 +22,7 @@ class SemVer(object):
         self.patch = int(patch)
 
     def compare(self, version=None):
+        """Compares its own semver against version"""
         if version:
             for component in ['major', 'minor', 'patch']:
                 comparison = SemVer.compare_component(
@@ -34,15 +35,19 @@ class SemVer(object):
         return -1
 
     def greater(self, version=None):
+        """Checks if self is greater than version"""
         return -1 == self.compare(version)
 
     def lesser(self, version=None):
+        """Checks if self is less than version"""
         return 1 == self.compare(version)
 
     def equal(self, version=None):
+        """Checks if self is equal to version"""
         return 0 == self.compare(version)
 
     def bump(self, component=None):
+        """Increases the semver using the specified component"""
         if component in SemVer.ALL_KEYS:
             if component in SemVer.PATCH_KEYS:
                 self.patch = self.patch + 1
@@ -60,6 +65,7 @@ class SemVer(object):
 
     @staticmethod
     def compare_component(first, second):
+        """Compares two semver components"""
         if first < second:
             return 1
         elif first > second:
@@ -68,18 +74,22 @@ class SemVer(object):
 
     @staticmethod
     def from_version(version):
+        """Creates a SemVer object from a version string"""
         return SemVer(*version.replace('v', '').split('.'))
 
     @staticmethod
     def is_semver(version):
+        """Checks if a version string is semver"""
         return not match(SemVer.SEMVER_PATTERN, version) is None
 
     @staticmethod
     def is_component(version):
+        """Checks if a version string is a semver component"""
         return version in SemVer.ALL_KEYS
 
     @staticmethod
     def get_active_branch():
+        """Determines the active branch"""
         current = check_output([
             'git',
             'rev-parse',
@@ -92,6 +102,7 @@ class SemVer(object):
 
     @staticmethod
     def get_current_version():
+        """Gets either the active semver or the topmost semver"""
         active = SemVer.get_active_branch()
         if active:
             return active
@@ -110,6 +121,7 @@ class SemVer(object):
 
     @staticmethod
     def process_version(version=None):
+        """Creates a new SemVer from the version input"""
         if version:
             if SemVer.is_semver(version):
                 return SemVer.from_version(version)
