@@ -51,6 +51,11 @@ Positionals
 ``base``
 --------
 
+``base`` is an optional branch to use as the base for the release. It requires |gitflow_avh|_, but it's totally optional and shouldn't break anything if you both don't have ``gitflow-avh`` and never use ``base``.
+
+.. |gitflow_avh| replace:: the extended ``gitflow-avh``
+.. _gitflow_avh: https://github.com/petervanderdoes/gitflow-avh
+
 Commands
 ========
 
