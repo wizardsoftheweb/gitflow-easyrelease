@@ -5,6 +5,7 @@ from __future__ import print_function
 from unittest import TestCase
 
 from mock import call, MagicMock, patch
+from pytest import mark
 
 from gitflow_easyrelease import SemVer
 
@@ -247,8 +248,16 @@ class BumpUnitTests(SemVerTestCase):
             )
 
 
-class ReprUnitTests(SemVerTestCase):
-    """"""
+@mark.parametrize(
+    "first,second,result",
+    [
+        (1, 2, 1),
+        (2, 1, -1),
+        (1, 1, 0)
+    ]
+)
+def test_compare_component(first, second, result):
+    assert result == SemVer.compare_component(first, second)
 
 
 class CompareComponentUnitTests(SemVerTestCase):
