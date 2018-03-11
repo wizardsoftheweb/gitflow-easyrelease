@@ -83,15 +83,105 @@ class CompareUnitTests(SemVerTestCase):
 
 
 class GreaterUnitTests(SemVerTestCase):
-    """"""
+    VERSION = SemVer(1, 2, 3)
+
+    @patch.object(
+        SemVer,
+        'compare',
+        return_value=1
+    )
+    def test_lesser(self, mock_compare):
+        mock_compare.assert_not_called()
+        self.assertFalse(self.semver.greater(self.VERSION))
+        mock_compare.assert_called_once_with(self.VERSION)
+
+    @patch.object(
+        SemVer,
+        'compare',
+        return_value=0
+    )
+    def test_equal(self, mock_compare):
+        mock_compare.assert_not_called()
+        self.assertFalse(self.semver.greater(self.VERSION))
+        mock_compare.assert_called_once_with(self.VERSION)
+
+    @patch.object(
+        SemVer,
+        'compare',
+        return_value=-1
+    )
+    def test_greater(self, mock_compare):
+        mock_compare.assert_not_called()
+        self.assertTrue(self.semver.greater(self.VERSION))
+        mock_compare.assert_called_once_with(self.VERSION)
 
 
 class LesserUnitTests(SemVerTestCase):
-    """"""
+    VERSION = SemVer(1, 2, 3)
+
+    @patch.object(
+        SemVer,
+        'compare',
+        return_value=1
+    )
+    def test_lesser(self, mock_compare):
+        mock_compare.assert_not_called()
+        self.assertTrue(self.semver.lesser(self.VERSION))
+        mock_compare.assert_called_once_with(self.VERSION)
+
+    @patch.object(
+        SemVer,
+        'compare',
+        return_value=0
+    )
+    def test_equal(self, mock_compare):
+        mock_compare.assert_not_called()
+        self.assertFalse(self.semver.lesser(self.VERSION))
+        mock_compare.assert_called_once_with(self.VERSION)
+
+    @patch.object(
+        SemVer,
+        'compare',
+        return_value=-1
+    )
+    def test_greater(self, mock_compare):
+        mock_compare.assert_not_called()
+        self.assertFalse(self.semver.lesser(self.VERSION))
+        mock_compare.assert_called_once_with(self.VERSION)
 
 
 class EqualUnitTests(SemVerTestCase):
-    """"""
+    VERSION = SemVer(1, 2, 3)
+
+    @patch.object(
+        SemVer,
+        'compare',
+        return_value=1
+    )
+    def test_lesser(self, mock_compare):
+        mock_compare.assert_not_called()
+        self.assertFalse(self.semver.equal(self.VERSION))
+        mock_compare.assert_called_once_with(self.VERSION)
+
+    @patch.object(
+        SemVer,
+        'compare',
+        return_value=0
+    )
+    def test_equal(self, mock_compare):
+        mock_compare.assert_not_called()
+        self.assertTrue(self.semver.equal(self.VERSION))
+        mock_compare.assert_called_once_with(self.VERSION)
+
+    @patch.object(
+        SemVer,
+        'compare',
+        return_value=-1
+    )
+    def test_greater(self, mock_compare):
+        mock_compare.assert_not_called()
+        self.assertFalse(self.semver.equal(self.VERSION))
+        mock_compare.assert_called_once_with(self.VERSION)
 
 
 class BumpUnitTests(SemVerTestCase):
