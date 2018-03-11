@@ -326,7 +326,52 @@ class GetActiveBranchUnitTests(SemVerTestCase):
 
 
 class GetCurrentVersionUnitTests(SemVerTestCase):
-    """"""
+
+    RETURN_NONE = MagicMock(return_value=None)
+    TAGS = [
+        '0.0.0',
+        '1.0.0',
+        '0.1.0',
+        '0.0.1'
+    ]
+
+    @patch(
+        'gitflow_easyrelease.semver.SemVer.get_active_branch',
+        return_value=SemVer(1, 2, 3)
+    )
+    def test_with_active_release_branch(self, mock_active):
+        mock_active.assert_not_called()
+        self.assertEqual(
+            SemVer.get_current_version().__repr__(),
+            '1.2.3'
+        )
+        mock_active.assert_called_once_with()
+
+    @patch(
+        'gitflow_easyrelease.semver.SemVer.get_active_branch',
+        RETURN_NONE
+    )
+    @patch(
+        'gitflow_easyrelease.semver.RepoInfo.get_semver_tags',
+        RETURN_NONE
+    )
+    def test_no_versions(self):
+        self.assertEqual(
+            SemVer.get_current_version().__repr__(),
+            '0.0.0'
+        )
+
+    @patch(
+        'gitflow_easyrelease.semver.RepoInfo.get_semver_tags',
+        return_value=TAGS
+    )
+    def test_tagged_versions(self, mock_tags):
+        mock_tags.assert_not_called()
+        self.assertEqual(
+            SemVer.get_current_version().__repr__(),
+            '1.0.0'
+        )
+        mock_tags.assert_called_once_with()
 
 
 class ProcessVersionUnitTests(SemVerTestCase):
