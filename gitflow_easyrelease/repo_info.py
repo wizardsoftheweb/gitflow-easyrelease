@@ -18,6 +18,17 @@ class RepoInfo(object):
         """Checks if the active branch is a release branch"""
         return self.branch.startswith(self.prefix)
 
+    def tidy_branch(self):
+        """Removes the release branch prefix"""
+        return self.branch.strip().replace(self.prefix, '')
+
+    def to_semver(self):
+        """Converts the active branch to semver or returns None"""
+        if self.is_release_branch():
+            branch = self.tidy_branch()
+            return SemVer(*branch.split('.'))
+        return None
+
     @staticmethod
     def ensure_git_flow():
         """Ensures git flow is available"""
