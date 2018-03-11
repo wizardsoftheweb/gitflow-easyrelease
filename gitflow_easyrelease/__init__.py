@@ -1,8 +1,5 @@
-from __future__ import print_function
-
-
-def cli():
-    print('cool')
-
-if '__main__' == __name__:
-    cli()
+from .semver import SemVer
+from .git import Git
+from .color_output import ColorOutput
+from .subcommand import Subcommand
+from .application import Application
