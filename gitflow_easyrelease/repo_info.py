@@ -4,7 +4,7 @@ from __future__ import print_function
 
 from subprocess import check_output
 
-from gitflow_easyrelease import SemVer
+from gitflow_easyrelease import is_semver
 
 
 class RepoInfo(object):
@@ -22,11 +22,11 @@ class RepoInfo(object):
         """Removes the release branch prefix"""
         return self.branch.strip().replace(self.prefix, '')
 
-    def to_semver(self):
+    def to_semver_args(self):
         """Converts the active branch to semver or returns None"""
         if self.is_release_branch():
             branch = self.tidy_branch()
-            return SemVer(*branch.split('.'))
+            return branch.split('.')
         return None
 
     @staticmethod
@@ -76,5 +76,5 @@ class RepoInfo(object):
         return [
             version
             for version in RepoInfo.get_tags()
-            if SemVer.is_semver(version)
+            if is_semver(version)
         ]
