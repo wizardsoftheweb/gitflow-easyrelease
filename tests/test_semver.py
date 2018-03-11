@@ -32,7 +32,54 @@ class ConstructorUnitTests(SemVerTestCase):
 
 
 class CompareUnitTests(SemVerTestCase):
-    """"""
+    STRING_VERSION = 'v1.2.3'
+    SEMVER_VERSION = SemVer(1, 2, 3)
+
+    @patch(
+        'gitflow_easyrelease.semver.SemVer.from_version',
+        return_value=None
+    )
+    def test_semver_creation(self, mock_from):
+        mock_from.assert_not_called()
+        self.semver.compare(self.STRING_VERSION)
+        mock_from.assert_called_once_with(self.STRING_VERSION)
+
+    @patch(
+        'gitflow_easyrelease.semver.SemVer.from_version',
+        return_value=None
+    )
+    def test_semver_creation_skipping(self, mock_from):
+        mock_from.assert_not_called()
+        self.semver.compare(self.SEMVER_VERSION)
+        mock_from.assert_not_called()
+
+    @patch(
+        'gitflow_easyrelease.semver.SemVer.compare_component',
+        return_value=0
+    )
+    def test_equality_comparison(self, mock_comparison):
+        mock_comparison.assert_not_called()
+        self.assertEqual(
+            self.semver.compare(self.SEMVER_VERSION),
+            0
+        )
+        mock_comparison.assert_has_calls([
+            call(0, 1),
+            call(0, 2),
+            call(0, 3)
+        ])
+
+    @patch(
+        'gitflow_easyrelease.semver.SemVer.compare_component',
+        return_value=1
+    )
+    def test_difference_comparison(self, mock_comparison):
+        mock_comparison.assert_not_called()
+        self.assertEqual(
+            self.semver.compare(self.SEMVER_VERSION),
+            1
+        )
+        mock_comparison.assert_called_once_with(0, 1)
 
 
 class GreaterUnitTests(SemVerTestCase):
