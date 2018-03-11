@@ -12,7 +12,7 @@ from gitflow_easyrelease import ColorOutput, SemVer
 class Subcommand(object):
     """This class defines a subcommand to be run against the main app."""
 
-    def __init__(
+    def __init__(  # pylint: disable=too-many-arguments
             self,
             subcommand='',
             help_string='',
