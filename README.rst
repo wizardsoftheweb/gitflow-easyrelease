@@ -62,20 +62,76 @@ Commands
 ``init``
 --------
 
+``git easyrelease init [base]``
+
+Convenience method to seed the release with ``0.0.0``. It runs
+
+.. code:: sh-session
+
+    $ git flow release start 0.0.0 <base>
+    $ git flow release finish
+
+
 ``quick``
 ---------
+
+``git easyrelease quick version [base]``
+
+Convenience method to start and finish a release branch. It runs
+
+.. code:: sh-session
+
+    $ git flow release start <version> <base>
+    $ git flow release finish
+
 
 ``start``
 ---------
 
+``git easyrelease start version [base]``
+
+Extends ``git flow release start`` with extra semver functionality. It runs
+
+.. code:: sh-session
+
+    $ git flow release start <version> <base>
+
+
 ``finish``
 ----------
+
+``git easyrelease finish [version]``
+
+Extends ``git flow release finish`` with extra semver functionality. Without ``version``, it attempts to ``finish`` the active branch. It runs
+
+.. code:: sh-session
+
+    $ git flow release finish <version>
+
 
 ``publish``
 -----------
 
+``git easyrelease publish [version]``
+
+Extends ``git flow release publish`` with extra semver functionality. Without ``version``, it attempts to ``publish`` the active branch. It runs
+
+.. code:: sh-session
+
+    $ git flow release publish <version>
+
+
 ``delete``
 ----------
+
+``git easyrelease delete [version]``
+
+Extends ``git flow release delete`` with extra semver functionality. Without ``version``, it attempts to ``delete`` the active branch. It runs
+
+.. code:: sh-session
+
+    $ git flow release delete <version>
+
 
 Roadmap
 =======
