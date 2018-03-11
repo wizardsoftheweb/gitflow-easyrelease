@@ -41,7 +41,8 @@ class ApplicationTestCase(TestCase):
         self.mock_parser_add = MagicMock(return_value=self.subparsers)
         self.parser = MagicMock(
             add_subparsers=self.mock_parser_add,
-            add_argument=self.mock_parser_add
+            add_argument=self.mock_parser_add,
+            parse_known_args=self.mock_parser_add
         )
 
 
@@ -184,7 +185,16 @@ class CreateRootParserUnitTests(ApplicationTestCase):
 
 
 class ParseArgsUnitTests(ApplicationTestCase):
-    """"""
+
+    def test_without_args(self):
+        self.mock_parser_add.assert_not_called()
+        Application.parse_args(self.parser)
+        self.mock_parser_add.assert_called_once_with(['-h'])
+
+    def test_with_args(self):
+        self.mock_parser_add.assert_not_called()
+        Application.parse_args(self.parser, ['qqq'])
+        self.mock_parser_add.assert_called_once_with(['qqq'])
 
 
 class AllHelpProgHeaderUnitTests(ApplicationTestCase):
