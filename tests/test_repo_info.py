@@ -32,3 +32,10 @@ class RepoInfoTestCase(TestCase):
         self.repo = RepoInfo()
         get_release_prefix_patcher.stop()
         get_active_branch_patcher.stop()
+
+
+class ConstructorUnitTests(RepoInfoTestCase):
+
+    def test_calls(self):
+        self.mock_get_release_prefix.assert_called_once_with()
+        self.mock_get_active_branch.assert_called_once_with()
