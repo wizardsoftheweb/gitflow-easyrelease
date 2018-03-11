@@ -16,6 +16,12 @@ class ApplicationTestCase(TestCase):
     def setUp(self):
         self.construct_application()
         self.addCleanup(self.wipe_application)
+        self.subparsers = MagicMock()
+        self.mock_parser_add = MagicMock(return_value=self.subparsers)
+        self.parser = MagicMock(
+            add_subparsers=self.mock_parser_add,
+            add_argument=self.mock_parser_add
+        )
 
     def wipe_application(self):
         del self.application
@@ -46,12 +52,6 @@ class ConstructorUnitTests(ApplicationTestCase):
 
 class AttachSubparsersUnitTests(ApplicationTestCase):
 
-    def setUp(self):
-        ApplicationTestCase.setUp(self)
-        self.subparsers = MagicMock()
-        self.mock_parser_add = MagicMock(return_value=self.subparsers)
-        self.parser = MagicMock(add_subparsers=self.mock_parser_add)
-
     def test_subparser_add(self):
         self.mock_parser_add.assert_not_called()
         self.application.attach_subparsers(self.parser)
@@ -64,7 +64,25 @@ class AttachSubparsersUnitTests(ApplicationTestCase):
 
 
 class PopulateRootParserUnitTests(ApplicationTestCase):
-    """"""
+
+    def setUp(self):
+        ApplicationTestCase.setUp(self)
+        attach_subparsers_patcher = patch.object(
+            Application,
+            'attach_subparsers'
+        )
+        self.mock_attach_subparsers = attach_subparsers_patcher.start()
+        self.addCleanup(attach_subparsers_patcher.stop)
+
+    def test_argument_add(self):
+        self.mock_parser_add.assert_not_called()
+        self.application.populate_root_parser(self.parser)
+        self.mock_parser_add.assert_called_once()
+
+    def test_subparsers_add(self):
+        self.mock_attach_subparsers.assert_not_called()
+        self.application.populate_root_parser(self.parser)
+        self.mock_attach_subparsers.assert_called_once()
 
 
 class BootstrapUnitTests(ApplicationTestCase):
