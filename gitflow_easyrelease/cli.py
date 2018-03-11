@@ -1,3 +1,5 @@
+"""This file provides the cli function"""
+
 from __future__ import print_function
 
 from collections import OrderedDict

@@ -1,3 +1,5 @@
+"""This file provides the Subcommand class"""
+
 from __future__ import print_function
 
 from subprocess import check_output

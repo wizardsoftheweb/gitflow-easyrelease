@@ -1,3 +1,5 @@
+"""This file provides the ColorOutput class"""
+
 from __future__ import print_function
 
 from subprocess import CalledProcessError, check_output

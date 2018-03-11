@@ -1,3 +1,5 @@
+"""This file provides the SemVer class"""
+
 from __future__ import print_function
 
 from re import compile as re_compile, match

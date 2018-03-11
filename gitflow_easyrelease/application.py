@@ -1,3 +1,5 @@
+"""This file provides the Application class"""
+
 from __future__ import print_function
 
 from argparse import ArgumentParser
