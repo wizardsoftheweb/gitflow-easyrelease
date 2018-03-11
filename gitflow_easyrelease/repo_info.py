@@ -5,13 +5,12 @@ from __future__ import print_function
 from subprocess import check_output
 
 
-class Git(object):
+class RepoInfo(object):
     """This utility class provides information about the underlying repo"""
-    # TODO: rename
 
     def __init__(self):
-        self.prefix = Git.get_release_prefix()
-        self.branch = Git.get_active_branch()
+        self.prefix = RepoInfo.get_release_prefix()
+        self.branch = RepoInfo.get_active_branch()
 
     def is_release_branch(self):
         """Checks if the active branch is a release branch"""
