@@ -1,13 +1,9 @@
 from __future__ import print_function
 
-from argparse import ArgumentParser, REMAINDER
-from collections import OrderedDict
-from re import compile as re_compile, match
 from subprocess import CalledProcessError, check_output
-from sys import argv, exit as sys_exit
 
-from argparse_color_formatter import ColorHelpFormatter
 from colors import color
+
 
 class ColorOutput:
 
