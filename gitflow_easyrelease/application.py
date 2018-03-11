@@ -113,11 +113,11 @@ class Application(object):
                 and
                 hasattr(parser, '_subparsers')
                 and
-                hasattr(parser._subparsers, '_actions')
+                hasattr(getattr(parser, '_subparsers'), '_actions')
         ):
             for action in [
                     action
-                    for action in parser._subparsers._actions
+                    for action in getattr(getattr(parser, '_subparsers'), '_actions')
                     if action.choices
             ]:
                 for _, value in action.choices.items():
