@@ -20,6 +20,7 @@ class ColorOutput(object):
         self.color = self.color_factory()
 
     def color_factory(self):
+        """Returns a suitable color method"""
         if not self.block_color:
             if ColorOutput.can_use_ansi() or self.force_color:
                 return color
@@ -30,6 +31,7 @@ class ColorOutput(object):
 
     @staticmethod
     def can_use_ansi():
+        """Checks if the terminal can handle colors"""
         try:
             check_output(['which', 'tput'])
             colors = int(check_output(['tput', 'colors']).strip())
@@ -41,4 +43,5 @@ class ColorOutput(object):
 
     @staticmethod
     def no_color(text_to_color, **kwargs):
+        """Returns the text undecorated"""
         return text_to_color
