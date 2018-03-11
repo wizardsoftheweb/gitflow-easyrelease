@@ -130,7 +130,7 @@ These percentages are pretty arbitrary. Today's 47% could be tomorrow's 90% or v
 
 Once all of these are finished, I'll release `v1`. Until then, `v0` should be used with caution, because it's not stable.
 
-| Progess | Feature |
+| Progress | Feature |
 | ------: | ------- |
 |     96% | Testing |
 
@@ -138,7 +138,7 @@ Once all of these are finished, I'll release `v1`. Until then, `v0` should be us
 
 These are things I'd like to add, but probably won't be included in `v1`. If not, they'll most likely constitute one or more minor version increments.
 
-| Progess | Feature |
+| Progress | Feature |
 | ------: | ------- |
 |     10% | `git config` integration (or, rather, `gitflow` config integration) |
 |      0% | Disable `base` without `gitflow-avh` |
