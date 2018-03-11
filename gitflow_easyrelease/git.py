@@ -14,14 +14,17 @@ class Git(object):
         self.branch = Git.get_active_branch()
 
     def is_release_branch(self):
+        """Checks if the active branch is a release branch"""
         return self.branch.startswith(self.prefix)
 
     @staticmethod
     def ensure_git_flow():
+        """Ensures git flow is available"""
         check_output(['which', 'git-flow'])
 
     @staticmethod
     def get_release_prefix():
+        """Determines the git flow release branch prefix"""
         return check_output([
             'git',
             'config',
@@ -30,6 +33,7 @@ class Git(object):
 
     @staticmethod
     def get_active_branch():
+        """Determines the active branch"""
         return check_output([
             'git',
             'rev-parse',
@@ -39,6 +43,7 @@ class Git(object):
 
     @staticmethod
     def get_branches():
+        """Gets all available branches"""
         return check_output([
             'git',
             'for-each-ref',
