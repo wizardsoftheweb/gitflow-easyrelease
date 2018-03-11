@@ -198,7 +198,27 @@ class ParseArgsUnitTests(ApplicationTestCase):
 
 
 class AllHelpProgHeaderUnitTests(ApplicationTestCase):
-    """"""
+    RESULT = 'qqq'
+
+    def setUp(self):
+        ApplicationTestCase.setUp(self)
+        self.mock_color = MagicMock(return_value=self.RESULT)
+        color_output_patcher = patch(
+            'gitflow_easyrelease.application.ColorOutput',
+            return_value=self.mock_color
+        )
+        self.mock_color_output = color_output_patcher.start()
+        self.addCleanup(color_output_patcher.stop)
+
+    def test_call(self):
+        self.mock_color_output.assert_not_called()
+        self.mock_color.assert_not_called()
+        self.assertEqual(
+            Application.all_help_prog_header(self.parser),
+            self.RESULT
+        )
+        self.mock_color_output.assert_called_once()
+        self.mock_color.assert_called_once()
 
 
 class PrintAllHelpUnitTests(ApplicationTestCase):
