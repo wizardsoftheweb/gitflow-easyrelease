@@ -2,9 +2,7 @@
 
 from __future__ import print_function
 
-from re import compile as re_compile, match
-
-from gitflow_easyrelease import RepoInfo
+from gitflow_easyrelease import is_semver, RepoInfo
 
 
 class SemVer(object):
@@ -14,8 +12,6 @@ class SemVer(object):
     MINOR_KEYS = ['m', 'minor', '^']
     MAJOR_KEYS = ['M', 'major']
     ALL_KEYS = PATCH_KEYS + MINOR_KEYS + MAJOR_KEYS
-
-    SEMVER_PATTERN = re_compile(r'\s*v?\d+\.\d+\.\d+\s*')
 
     def __init__(self, major=0, minor=0, patch=0):
         self.major = int(major)
@@ -79,11 +75,6 @@ class SemVer(object):
         return SemVer(*version.replace('v', '').split('.'))
 
     @staticmethod
-    def is_semver(version):
-        """Checks if a version string is semver"""
-        return not match(SemVer.SEMVER_PATTERN, version) is None
-
-    @staticmethod
     def is_component(version):
         """Checks if a version string is a semver component"""
         return version in SemVer.ALL_KEYS
@@ -92,7 +83,7 @@ class SemVer(object):
     def get_active_branch():
         """Determines the active branch"""
         repo_info = RepoInfo()
-        return repo_info.to_semver()
+        return SemVer(*repo_info.to_semver_args())
 
     @staticmethod
     def get_current_version():
@@ -113,7 +104,7 @@ class SemVer(object):
     def process_version(version=None):
         """Creates a new SemVer from the version input"""
         if version:
-            if SemVer.is_semver(version):
+            if is_semver(version):
                 return SemVer.from_version(version)
             elif SemVer.is_component(version):
                 return SemVer.get_current_version().bump(version)
