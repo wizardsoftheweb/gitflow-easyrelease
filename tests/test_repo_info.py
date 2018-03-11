@@ -16,7 +16,7 @@ class RepoInfoTestCase(TestCase):
         self.addCleanup(self.wipe_repo)
 
     def wipe_repo(self):
-        del self.repo
+        del self.repo_info
 
     def construct_repo(self):
         get_release_prefix_patcher = patch.object(
@@ -29,7 +29,7 @@ class RepoInfoTestCase(TestCase):
             'get_active_branch'
         )
         self.mock_get_active_branch = get_active_branch_patcher.start()
-        self.repo = RepoInfo()
+        self.repo_info = RepoInfo()
         get_release_prefix_patcher.stop()
         get_active_branch_patcher.stop()
 
@@ -42,7 +42,17 @@ class ConstructorUnitTests(RepoInfoTestCase):
 
 
 class IsReleaseBranchUnitTests(RepoInfoTestCase):
-    """"""
+    PREFIX = 'release/'
+    NOT_RELEASE_BRANCH = 'feature/qqq'
+    RELEASE_BRANCH = 'release/zzz'
+
+    def setUp(self):
+        RepoInfoTestCase.setUp(self)
+        self.repo_info.prefix = self.PREFIX
+
+    def test_doesnt_start_with(self):
+        self.repo_info.branch = self.NOT_RELEASE_BRANCH
+        self.assertFalse(self.repo_info.is_release_branch())
 
 
 class TidyBranchUnitTests(RepoInfoTestCase):
