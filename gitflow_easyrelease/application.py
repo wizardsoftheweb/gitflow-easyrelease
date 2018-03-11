@@ -104,7 +104,7 @@ class Application(object):
         return color_output(parser.prog, fg='green', style='bold+underline')
 
     @staticmethod
-    def print_all_help(parser, in_color=False):
+    def print_all_help(parser):
         """Prints all available help"""
         print("%s\n" % Application.all_help_prog_header(parser))
         parser.print_help()
@@ -113,11 +113,11 @@ class Application(object):
                 and
                 hasattr(parser, '_subparsers')
                 and
-                hasattr(parser._subparsers, '_actions')
+                hasattr(getattr(parser, '_subparsers'), '_actions')
         ):
             for action in [
                     action
-                    for action in parser._subparsers._actions
+                    for action in getattr(getattr(parser, '_subparsers'), '_actions')
                     if action.choices
             ]:
                 for _, value in action.choices.items():

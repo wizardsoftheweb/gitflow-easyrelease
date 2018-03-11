@@ -6,13 +6,13 @@ from subprocess import check_output
 
 from argparse_color_formatter import ColorHelpFormatter
 
-from gitflow_easyrelease import ColorOutput, SemVer
+from gitflow_easyrelease import ColorOutput, RepoInfo, SemVer
 
 
 class Subcommand(object):
     """This class defines a subcommand to be run against the main app."""
 
-    def __init__(
+    def __init__(  # pylint: disable=too-many-arguments
             self,
             subcommand='',
             help_string='',
@@ -47,7 +47,6 @@ class Subcommand(object):
 
     def execute(self, parsed_args):
         """Executes its action"""
-        subcommand = parsed_args.subcommand
         version = (
             SemVer.process_version(parsed_args.version)
             if self.has_version
@@ -88,18 +87,6 @@ class Subcommand(object):
         parser.add_argument('version', **options)
 
     @staticmethod
-    def get_branches():
-        """Gets all available branches"""
-        return check_output([
-            'git',
-            'for-each-ref',
-            '--format',
-            '%(refname:short)',
-            'refs/heads/',
-            'refs/remotes/'
-        ]).strip().split('\n')
-
-    @staticmethod
     def attach_base_argument(parser):
         """Adds a base branch argument"""
         parser.add_argument(
@@ -107,7 +94,7 @@ class Subcommand(object):
             nargs="?",
             default=None,
             help="Optional base branch",
-            choices=Subcommand.get_branches(),
+            choices=RepoInfo.get_branches(),
             type=str
         )
 

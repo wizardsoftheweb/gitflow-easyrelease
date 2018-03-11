@@ -4,14 +4,15 @@ from __future__ import print_function
 
 from subprocess import check_output
 
+from gitflow_easyrelease import SemVer
 
-class Git(object):
+
+class RepoInfo(object):
     """This utility class provides information about the underlying repo"""
-    # TODO: rename
 
     def __init__(self):
-        self.prefix = Git.get_release_prefix()
-        self.branch = Git.get_active_branch()
+        self.prefix = RepoInfo.get_release_prefix()
+        self.branch = RepoInfo.get_active_branch()
 
     def is_release_branch(self):
         """Checks if the active branch is a release branch"""
@@ -52,3 +53,17 @@ class Git(object):
             'refs/heads/',
             'refs/remotes/'
         ]).strip().split('\n')
+
+    @staticmethod
+    def get_tags():
+        """Returns all defined tags"""
+        return check_output(['git', 'tag']).strip().split('\n')
+
+    @staticmethod
+    def get_semver_tags():
+        """Returns all semver tags"""
+        return [
+            version
+            for version in RepoInfo.get_tags()
+            if SemVer.is_semver(version)
+        ]

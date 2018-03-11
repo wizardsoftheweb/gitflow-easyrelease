@@ -3,7 +3,8 @@
 from __future__ import print_function
 
 from re import compile as re_compile, match
-from subprocess import check_output
+
+from gitflow_easyrelease import RepoInfo
 
 
 class SemVer(object):
@@ -90,13 +91,9 @@ class SemVer(object):
     @staticmethod
     def get_active_branch():
         """Determines the active branch"""
-        current = check_output([
-            'git',
-            'rev-parse',
-            '--abbrev-ref',
-            'HEAD'
-        ]).strip()
-        if current.startswith('release'):
+        repo_info = RepoInfo()
+        current = repo_info.get_active_branch()
+        if repo_info.is_release_branch():
             return SemVer(*current.replace('release/', '').split('.'))
         return None
 
@@ -106,11 +103,7 @@ class SemVer(object):
         active = SemVer.get_active_branch()
         if active:
             return active
-        versions = [
-            SemVer.from_version(version)
-            for version in check_output(['git', 'tag']).strip().split('\n')
-            if SemVer.is_semver(version)
-        ]
+        versions = RepoInfo.get_semver_tags()
         if versions:
             max_version = versions.pop()
             for version in versions:
